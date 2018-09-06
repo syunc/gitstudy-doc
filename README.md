@@ -112,3 +112,35 @@
 		2. 可使用正则模式
 		3. ' / ' 后说明要忽略的目录
 		4. ' ! ' 忽略特定的除此之外的文件
+
+
+###  命令详解
+
+######## 添加文件#######
+
+`git add <file>` 将文件添加至暂存区，即将文件变为追踪状态
+
+`git add .` 将所有文件添加至暂存区
+
+
+###### 已添加文件取消修改#####
+`git checkout <file>` 将已追踪文件从modify状态变为未修改状态
+
+######取消添加文件追踪 ########
+`git reset HEAD <file>` 添加到了暂存区时，但想丢弃修改
+
+`git reset --hard HEAD` 将文件恢复至之前未修改的工作区状态（hard 参数是将工作区和暂存区强制一致）
+
+
+----------
+
+
+`git commit -m 'comment'` 提交到版本库并添加注释
+
+`git commit -am 'comment'` 相当于 `git add . 和 git commit 的结合 `
+
+`git commit --amend` 修改提交时的注释信息
+
+
+`git cherry-pick + commit_id` 直接将节点复制合并到当前分支
+
