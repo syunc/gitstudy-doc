@@ -90,20 +90,20 @@
 	
 	查看配置信息：`git config --list`
 	- 配置用户
-	 1. 单个项目配置用户名：`git config user.name + your_setting_username`
-	 2. 全局配置用户名：`git config --global user.name +your_setting_username`
-	 3. 系统配置用户名：`git config --system user.name +your_setting_username`
+	 1. 单个项目配置用户名：`git config user.name + <your_setting_username>`
+	 2. 全局配置用户名：`git config --global user.name + <your_setting_username>`
+	 3. 系统配置用户名：`git config --system user.name + <your_setting_username>`
 	- 配置邮箱
-	 1. 单个项目配置邮箱：`git config user.email + your_email_address`
-	 2. 全局配置邮箱：`git config --global user.email +your_email_address`
-	 3. 系统配置邮箱：`git config --system user.email +your_email_address`
+	 1. 单个项目配置邮箱：`git config user.email + <your_email_address>`
+	 2. 全局配置邮箱：`git config --global user.email + <your_email_address>`
+	 3. 系统配置邮箱：`git config --system user.email + <your_email_address>`
 
 
 		**ps：配置的用户名有就近原则，例如：在一个项目中，配置的用户名将覆盖全局配置的用户名,优先级：1>2>3;以上配置的作用，Git 用此区分不同的开发人员的身份。**
 
 	- 配置文本编辑器：`git config --global core.editor emacs`
 	- 配置差异分析工具：`git config --global merge.tool vimdiff`
-	- 配置别名：
+	- 配置别名：`git config --global alias.st status`
 
 	- 配置 `.gitignore文件`(作用：列出要忽略的文件列表，不被 Git 纳入版本管理)
 	
