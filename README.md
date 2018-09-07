@@ -111,36 +111,95 @@
 		1. 空行和#都会被 git 忽略
 		2. 可使用正则模式
 		3. ' / ' 后说明要忽略的目录
-		4. ' ! ' 忽略特定的除此之外的文件
+		4. ' ! ' 在忽略文件中除了此文件
+例如：
+
+		![.gitignore](https://i.imgur.com/3yJy71F.jpg)
 
 
 ###  命令详解
 
-######## 添加文件#######
+###### 添加文件 #######
 
 `git add <file>` 将文件添加至暂存区，即将文件变为追踪状态
 
 `git add .` 将所有文件添加至暂存区
 
 
-###### 已添加文件取消修改#####
+###### 撤销修改#####
+
 `git checkout <file>` 将已追踪文件从modify状态变为未修改状态
 
-######取消添加文件追踪 ########
+
+###### 取消追踪 #######
 `git reset HEAD <file>` 添加到了暂存区时，但想丢弃修改
 
 `git reset --hard HEAD` 将文件恢复至之前未修改的工作区状态（hard 参数是将工作区和暂存区强制一致）
 
 
-----------
 
+####### 提交到版本库 #######
 
 `git commit -m 'comment'` 提交到版本库并添加注释
 
-`git commit -am 'comment'` 相当于 `git add . 和 git commit 的结合 `
+`git commit -am 'comment' 相当于 git add . 和 git commit 的结合 ,此时你就省去一条命令，直接将文件添加至暂存区`
 
-`git commit --amend` 修改提交时的注释信息
+----------
+
+`git commit --amend` 如果自上次提交以来你还未做任何修改（例如，在上次
+提交后马上执行了此命令），那么快照会保持不变，而你所修改的只是提交信息。
+
+如果执行顺序如下：
+
+ `$ git commit -m 'initial commit'`
+
+ `$ git add forgotten_file`
+
+ `$ git commit --amend`
+
+那么将会将后来添加的文件一起提交。
+
+----------
+
+
+###### 查看差异 #######
+`git diff file`	查看尚未暂存的文件更新了哪些部分
+
+`git diff --cached||statged file`	查看已添加至暂存区的文件与版本库的区别
+
+
+###### 移除文件 ######
+
+情况一：未添加至暂存区（可以用 git rm 命令完成此项工作，连带从工作目录中删除指定的文
+件）
+
+	步骤1： rm filename（手工删除本地文件）
+	步骤2： git rm filename（记录移除操作）
+情况二：已添加至暂存区（可以用 git rm 命令完成此项工作，连带从工作目录中删除指定的文
+件）
+
+	步骤1： git rm -f filename
+	或
+	步骤1： rm filename
+	步骤2： git rm filename
+情况三：把文件从 Git 仓库中删除（亦即从暂存区域移除），但仍然希望保留
+在当前工作目录中。 换句话说，你想让文件保留在磁盘，但是并不想让 Git 继续跟踪
+
+	git rm --cached filename 
+
+###### 文件改名 ######
+
+`git mv old_name new_name`
+
+Git 非常聪明能够意识到这是一次改名，实际上这条命令相当于进行了三条命令的操作，即
+	
+	$ mv old_name new_name
+	$ git rm old_name 
+	$ git add new_name 
+
 
 
 `git cherry-pick + commit_id` 直接将节点复制合并到当前分支
 
+
+### 远程仓库的使用 ###
