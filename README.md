@@ -144,3 +144,13 @@
 
 `git cherry-pick + commit_id` 直接将节点复制合并到当前分支
 
+
+### fast-forward ###
+	如果待合并的分支在当前分支的下游，也就是说没有分叉时，会发生快速合并，从test分支切换到master分支，然后合并test分支
+	http://yanhaijing.com/blog/498.gif
+	如果我们不想要快速合并，那么我们可以强制指定为非快速合并，只需加上--no-ff参数
+	http://yanhaijing.com/blog/499.gif
+	
+
+
+
