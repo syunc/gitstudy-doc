@@ -154,7 +154,9 @@
 
 ### 参考资料 ###
 颜海静博客： http://yanhaijing.com/git/2017/02/09/deep-git-4/
+
 图解Git ：https://marklodato.github.io/visual-git-guide/index-zh-cn.html?no-svg
+
 Pro Git，第二版，简体中文：https://bingohuang.gitbooks.io/progit2/content/
 
 
