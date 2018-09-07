@@ -152,5 +152,7 @@
 	http://yanhaijing.com/blog/499.gif
 	
 
+### 参考资料 ###
+颜海静博客： http://yanhaijing.com/git/2017/02/09/deep-git-4/
 
 
