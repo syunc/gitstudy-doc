@@ -22,17 +22,17 @@
 #### Git和其他版本控制系统的差异
 
 - 差异一：
-    - GIT ：记录的是上一次每个变动文件的快照,直到文件产生新的变化git再进行新的快照保存,否则就建立一个指向上一文件的指针。
+    - Git ：记录的是上一次每个变动文件的快照,直到文件产生新的变化git再进行新的快照保存,否则就建立一个指向上一文件的指针。
     - 其他：记录变化文件与上一次对比产生了哪些差量，是增量式
 
 
 - 差异二：
-    - GIT ：本地数据资源完备,不需要网络便可频繁更新;等到有网络再提交远程仓库,本地资源完备体现在：臂如查看提交历史，版本回退等。
+    - Git ：本地数据资源完备,不需要网络便可频繁更新;等到有网络再提交远程仓库,本地资源完备体现在：臂如查看提交历史，版本回退等。
     - 其他：有些需频繁请求网络以期得到数据资源进行数据更新
 
 
 - 差异三：
-    - GIT ：通过SHA1算法计算出指纹字符串记录文件内容或目录结构，可由远程代码仓库和本地版本文件进行比较，远程和本地都无更新状态下能验证文件的完整性。
+    - Git ：通过SHA1算法计算出指纹字符串记录文件内容或目录结构，可由远程代码仓库和本地版本文件进行比较，远程和本地都无更新状态下能验证文件的完整性。
 
 
 #### 关于Git认知
@@ -79,7 +79,8 @@
 - 大小：内容大小
 - 内容：取决于对象的类型
 
-
+示意图如下：
+![](https://i.imgur.com/wuqNc9Y.jpg)
 
 ### Git工作流程
 
@@ -126,15 +127,18 @@
 `git add .` 将所有文件添加至暂存区
 
 
-###### 撤销修改#####
+###### 撤销修改 ######
 
-`git checkout <file>` 将已追踪文件从modify状态变为未修改状态
+`git checkout <file>` 将已追踪文件从`modify`状态变为未修改状态
 
-
-###### 取消追踪 #######
 `git reset HEAD <file>` 添加到了暂存区时，但想丢弃修改
 
-`git reset --hard HEAD` 将文件恢复至之前未修改的工作区状态（hard 参数是将工作区和暂存区强制一致）
+`git reset HEAD~3`将HEAD指针拨到指定commit_id处
+
+`git reset --hard HEAD` 将文件恢复至之前未修改的工作区状态（--hard 参数是将工作区和暂存区强制一致到commit_id处）
+
+下面用一张图揭示其中奥秘：
+![p1-3](https://i.imgur.com/z8I2wVD.jpg)
 
 
 
@@ -144,22 +148,33 @@
 
 `git commit -am 'comment' 相当于 git add . 和 git commit 的结合 ,此时你就省去一条命令，直接将文件添加至暂存区`
 
-----------
+###### 提交修改 
 
 `git commit --amend` 如果自上次提交以来你还未做任何修改（例如，在上次
 提交后马上执行了此命令），那么快照会保持不变，而你所修改的只是提交信息。
 
 如果执行顺序如下：
 
- `$ git commit -m 'initial commit'`
+ 		`$ git commit -m 'initial commit'`
 
- `$ git add forgotten_file`
+ 		`$ git add forgotten_file`
 
- `$ git commit --amend`
+ 		`$ git commit --amend`
 
 那么将会将后来添加的文件一起提交。
 
+### 小结
+
+- 简单`Git`工作流示意图如下所示：
+
+![](https://i.imgur.com/rzvWDaS.jpg)
+
+- `Git`	文件状态
+![](https://i.imgur.com/MSQwwdW.jpg)
+
+
 ----------
+
 
 
 ###### 查看差异 #######
@@ -197,18 +212,76 @@ Git 非常聪明能够意识到这是一次改名，实际上这条命令相当�
 	$ git rm old_name 
 	$ git add new_name 
 
+###### 查看 log ######
+
+`git log -number # 显示最近几条 `
+
+`git log –oneline（–abbrev-commit –pretty=oneline）# 单行显示，显示简短commit id `
+
+`git log –graph # 以树形展示 `
+
+`git log –decorate # 显示分支名等 `
+
+`git log –first-parent # 显示第一父元素（不显示merge进来的树形结构）` 
+
+`git log –all # 显示全部分支`
 
 
-`git cherry-pick + commit_id` 直接将节点复制合并到当前分支
+
+----------
 
 
 
-### fast-forward ###
+
+
+
+## Git 进阶
+
+###### 选择版本 ######
+
+假设我们的版本如下所示，但是我们有时候想找到当前分支的父提交或是祖父提交。 ~ 和 ^ 就能大展神威了。
+
+![版本示意图 图 1-1](https://i.imgur.com/HlFg2Bj.jpg)
+
+	$ git log HEAD^
+	A2
+	$ git log HEAD^^ 
+	A1
+	$ git log HEAD^2 
+	B1
+	$ git log HEAD~ 
+	A2
+	$ git log HEAD~~
+	A1
+	$ git log HEAD~2 
+	A1
+又或者我们想要选择一个区间的时候，下面可以看 .. 和 ... 还有 ^ 的区别。
+
+	$ git log master..test
+	C0 C1
+	$ git log ^master test
+	C0 C1
+	$ git log master…test
+	A1 A2 A3 C0 C1
+
+###### 搜索调试 #######
+blame可以快速显示**每一行**最后一次修改是谁
+
+`git blame README.md`
+
+![p1-2](https://i.imgur.com/5Jsf3qH.jpg)
+
+也可以指定搜索范围
+
+`$git blame -L10,15 README.md #查看10-15行的信息`
+
+###### fast-forward ######
 	如果待合并的分支在当前分支的下游，也就是说没有分叉时，会发生快速合并，从test分支切换到master分支，然后合并test分支
 	http://yanhaijing.com/blog/498.gif
 	如果我们不想要快速合并，那么我们可以强制指定为非快速合并，只需加上--no-ff参数
 	http://yanhaijing.com/blog/499.gif
-	
+
+`git cherry-pick + commit_id` 直接将节点复制合并到当前分支
 
 ### 参考资料 ###
 颜海静博客： http://yanhaijing.com/git/2017/02/09/deep-git-4/
