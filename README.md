@@ -137,8 +137,6 @@
 
 `git reset --hard HEAD` 将文件恢复至之前未修改的工作区状态（--hard 参数是将工作区和暂存区强制一致到commit_id处）
 
-下面用一张图揭示其中奥秘：
-![p1-3](https://i.imgur.com/z8I2wVD.jpg)
 
 
 
@@ -170,6 +168,7 @@
 ![](https://i.imgur.com/rzvWDaS.jpg)
 
 - `Git`	文件状态
+
 ![](https://i.imgur.com/MSQwwdW.jpg)
 
 
@@ -283,10 +282,99 @@ blame可以快速显示**每一行**最后一次修改是谁
 
 `git cherry-pick + commit_id` 直接将节点复制合并到当前分支
 
+###### `git checkout` 和 `git reset` 的区别 #######
+首先进行概念辨析！
+
+
+	Git里有三个区域很重要
+	
+	HEAD ：指向最近一次commit里的所有snapshot（版本区）
+	
+	Index：缓存区域，只有Index区域里的东西才可以被commit（暂存区）
+	
+	Working Directory 用：户操作区域（工作区）
+
+当你checkout分支的时候，git做了这么三件事情
+
+1. 将HEAD指向那个分支的最后一次commit
+
+2. 将HEAD指向的commit里所有文件的snapshot替换掉Index区域里原来的内容
+
+3. 将Index区域里的内容填充到Working Directory里
+
+**此时，你的版本库，暂存区，工作区内容是一致的。**
+
+然后后~~~！
+
+当你对文件进行了修改的时候，Index区域和Working Directory的内容是不一致，即Working Directory的时间节点比Index区域要新，此时 `git add file` 之后Working Directory和 Index区域的内容就是一致的了。再进一步，你对Index区域进行了提交，那么这三个区域又是一致的了！
+
+又然后后~~~！
+
+		补充
+		git revert：
+		git resvert HEAD #赋值前一个节点当做新的提交，相当于回到上一个提交的状态
+
+**ps：**已经提交到远程仓库的`commit` 不允许被`git reset`
+
+
+
+****`git reset 的一个栗子`****：
+![P1-7](https://i.imgur.com/c3ev9Sb.jpg)
+target指的是想要移动到哪去：
+![p1-6](https://i.imgur.com/6MMjCYq.jpg)
+
+#########完美的分割线############
+
+######checkout
+
+    checkout是会修改HEAD的指向，变更Index区域里的内容，修改Working Directory里的内容。
+	这看上去很像reset --hard，但和reset --hard相比有两个重要的差别
+
+1. - reset会把working directory里的所有内容都更新掉
+
+   - checkout不会去修改你在Working Directory里修改过的文件
+
+2. - reset把branch移动到HEAD指向的地方
+
+   - checkout则把HEAD移动到另一个分支
+
+**一个栗子:**
+
+![P1-7](https://i.imgur.com/jVpBcSc.jpg)
+
+LAST 来个小结
+
+	                         head    index   work dir  wd safe
+	Commit Level
+	reset --soft [commit]    REF     NO      NO        YES
+	reset [commit]           REF     YES     NO        YES
+	reset --hard [commit]    REF     YES     YES       NO
+	checkout [commit]        HEAD    YES     YES       YES
+	
+	File Level
+	reset (commit) [file]    NO      YES     NO        YES
+	checkout (commit) [file] NO      YES     YES       NO
+
+	“head”一列中的“REF”表示该命令移动了HEAD指向的分支引用，而“HEAD”则表示只移动了HEAD自身。 
+	 特别注意 “wd safe?” 一列，YES表示不会动你在work dir的修改，NO代表会动你在work dir的修改
+
+
+
+
+#########完美的分割线############
+
+
 ### 参考资料 ###
+
 颜海静博客： http://yanhaijing.com/git/2017/02/09/deep-git-4/
 
 图解Git ：https://marklodato.github.io/visual-git-guide/index-zh-cn.html?no-svg
 
 Pro Git，第二版，简体中文：https://bingohuang.gitbooks.io/progit2/content/
+
+思否chanjarster博客： https://segmentfault.com/a/1190000006185954
+
+																	THANKS~~ THE END~~
+
+
 
