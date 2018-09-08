@@ -4,17 +4,15 @@
 ##### 发展：
 1. 本地版本控制系统：复制整个项目文件夹从而形成新版本。
 
-
-    优点=>简单
-
-    缺点=>容易搞错
+	    优点：简单
+	
+	    缺点：容易搞错
     
 2. 集中化的版本控制系统：通过多台客户端连接服务器。
 
-
-    优点=>每个人可以看到项目上其他人做了什么，管理员容易管理权限
-
-    缺点=>一旦服务器挂了，谁都无法协同工作
+	    优点：每个人可以看到项目上其他人做了什么，管理员容易管理权限
+	
+	    缺点：一旦服务器挂了，谁都无法协同工作
 
 3. 分布式版本控制系统：每次将代码仓库完整镜像下来，每个协作者都可在本地拥有一份完整的代码，并可在本地进行修改然后提交到远程仓库
 
@@ -22,24 +20,27 @@
 #### Git和其他版本控制系统的差异
 
 - 差异一：
-    - Git ：记录的是上一次每个变动文件的快照,直到文件产生新的变化git再进行新的快照保存,否则就建立一个指向上一文件的指针。
-    - 其他：记录变化文件与上一次对比产生了哪些差量，是增量式
+
+
+		Git ：记录的是上一次每个变动文件的快照,直到文件产生新的变化git再进行新的快照保存,
+			  否则就建立一个指向上一文件的指针。
+		其他：记录变化文件与上一次对比产生了哪些差量，是增量式
 
 
 - 差异二：
-    - Git ：本地数据资源完备,不需要网络便可频繁更新;等到有网络再提交远程仓库,本地资源完备体现在：臂如查看提交历史，版本回退等。
-    - 其他：有些需频繁请求网络以期得到数据资源进行数据更新
+ 
+	    Git ：本地数据资源完备,不需要网络便可频繁更新;等到有网络再提交远程仓库,本地资源
+		      完备体现在：臂如查看提交历史，版本回退等。
+	    其他：有些需频繁请求网络以期得到数据资源进行数据更新
 
 
 - 差异三：
-    - Git ：通过SHA1算法计算出指纹字符串记录文件内容或目录结构，可由远程代码仓库和本地版本文件进行比较，远程和本地都无更新状态下能验证文件的完整性。
+
+     	Git ：通过SHA1算法计算出指纹字符串记录文件内容或目录结构，可由远程代码仓库
+			  和本地版本文件进行比较，远程和本地都无更新状态下能验证文件的完整性。
 
 
 #### 关于Git认知
-
-
-
-
 
 一、工作区、版本库、暂存区的区分
 
@@ -57,56 +58,60 @@
 - 已暂存：如果对文件做了修改并放入暂存区属于已暂存状态。
 - 已修改：对文件做了修改但未放入暂存区就属于已修改状态
 
-### Git对象模型
+### Git对象模型 
 
-##### 一、对象名
+**一、对象名 ：每个对象名都是对对象内容做SHA1哈希计算得到而来**
 
-- 每个对象名都是对对象内容做SHA1哈希计算得到而来
+	优点1 ： git只要比较对象名就可以很快知道两个对象是否相同
+	优点2 ： 同样的内容在不同仓库拥有相同对象名
+	优点3 ： 通过对象内容得到SHA1哈希值与对象名比较判断对象内容是否正确
 
-	- 优点1 => git只要比较对象名就可以很快知道两个对象是否相同
-	
-	- 优点2 => 同样的内容在不同仓库拥有相同对象名
-	
-	- 优点3 => 通过对象内容得到SHA1哈希值与对象名比较判断对象内容是否正确
-
-##### 二、对象组成
+**二、对象组成**
 
 - 对象的类型包括：
-	- blob：用于存储文件数据，通常是一个文件（通常是二进制文件，没有其他任何属性，文件名修改对其无影响）
-	- tree：目录，管理tree和blob(子目录和文件)
-	- commmit：一个commit指向一个tree，标记项目时间节点，(通常包含一个tree对象，父对象，作者，提交者，注释)
-	- tag ：标记某一个提交方法
+
+		blob：用于存储文件数据，通常是一个文件（通常是二进制文件，没有其他任何属性，
+		  文件名修改对其无影响）
+		tree：目录，管理tree和blob(子目录和文件)
+		commmit：一个commit指向一个tree，标记项目时间节点，(通常包含一个tree对象，
+		  父对象，作者，提交者，注释)
+		tag ：标记某一个提交方法
 - 大小：内容大小
 - 内容：取决于对象的类型
 
 示意图如下：
 ![](https://i.imgur.com/wuqNc9Y.jpg)
 
-### Git工作流程
+#### Git工作流程
 
-- 建立版本库
+- **建立版本库**
 	1. `git init`
 	2. `git clone + 远程仓库地址`
-- 配置 Git
+- **配置 Git**
 	
 	查看配置信息：`git config --list`
-	- 配置用户
-	 1. 单个项目配置用户名：`git config user.name + <your_setting_username>`
-	 2. 全局配置用户名：`git config --global user.name + <your_setting_username>`
-	 3. 系统配置用户名：`git config --system user.name + <your_setting_username>`
-	- 配置邮箱
-	 1. 单个项目配置邮箱：`git config user.email + <your_email_address>`
-	 2. 全局配置邮箱：`git config --global user.email + <your_email_address>`
-	 3. 系统配置邮箱：`git config --system user.email + <your_email_address>`
 
+	配置用户
 
-		**ps：配置的用户名有就近原则，例如：在一个项目中，配置的用户名将覆盖全局配置的用户名,优先级：1>2>3;以上配置的作用，Git 用此区分不同的开发人员的身份。**
+		 1. 单个项目配置用户名：git config user.name + <your_setting_username>
+		 2. 全局配置用户名：git config --global user.name + <your_setting_username>
+		 3. 系统配置用户名：git config --system user.name + <your_setting_username>
+	配置邮箱
 
-	- 配置文本编辑器：`git config --global core.editor emacs`
-	- 配置差异分析工具：`git config --global merge.tool vimdiff`
-	- 配置别名：`git config --global alias.st status`
+		 1. 单个项目配置邮箱：git config user.email + <your_email_address>
+		 2. 全局配置邮箱：git config --global user.email + <your_email_address>
+		 3. 系统配置邮箱：git config --system user.email + <your_email_address>
 
-	- 配置 `.gitignore文件`(作用：列出要忽略的文件列表，不被 Git 纳入版本管理)
+	ps：配置的用户名有就近原则，例如：在一个项目中，配置的用户名将覆盖全局配置的用户
+			名,优先级：1>2>3;以上配置的作用，Git 用此区分不同的开发人员的身份。
+
+	配置文本编辑器：`git config --global core.editor emacs`
+
+	配置差异分析工具：`git config --global merge.tool vimdiff`
+
+	配置别名：`git config --global alias.st status`
+
+	配置 `.gitignore文件`(作用：列出要忽略的文件列表，不被 Git 纳入版本管理)
 	
 		=> `.gitignore`格式规范：
 		1. 空行和#都会被 git 忽略
@@ -115,7 +120,7 @@
 		4. ' ! ' 在忽略文件中除了此文件
 例如：
 
-		![.gitignore](https://i.imgur.com/3yJy71F.jpg)
+	![.gitignore](https://i.imgur.com/3yJy71F.jpg)
 
 
 ###  命令详解
@@ -153,11 +158,11 @@
 
 如果执行顺序如下：
 
- 		`$ git commit -m 'initial commit'`
+ 	$ git commit -m 'initial commit'
 
- 		`$ git add forgotten_file`
+ 	$ git add forgotten_file
 
- 		`$ git commit --amend`
+ 	$ git commit --amend
 
 那么将会将后来添加的文件一起提交。
 
@@ -210,6 +215,7 @@ Git 非常聪明能够意识到这是一次改名，实际上这条命令相当�
 	$ mv old_name new_name
 	$ git rm old_name 
 	$ git add new_name 
+
 
 ###### 查看 log ######
 
@@ -275,9 +281,10 @@ blame可以快速显示**每一行**最后一次修改是谁
 `$git blame -L10,15 README.md #查看10-15行的信息`
 
 ###### fast-forward ######
-	如果待合并的分支在当前分支的下游，也就是说没有分叉时，会发生快速合并，从test分支切换到master分支，然后合并test分支
+如果待合并的分支在当前分支的下游，也就是说没有分叉时，会发生快速合并，从test分支切换到master分支，然后合并test分支
 	http://yanhaijing.com/blog/498.gif
-	如果我们不想要快速合并，那么我们可以强制指定为非快速合并，只需加上--no-ff参数
+
+如果我们不想要快速合并，那么我们可以强制指定为非快速合并，只需加上--no-ff参数
 	http://yanhaijing.com/blog/499.gif
 
 `git cherry-pick + commit_id` 直接将节点复制合并到当前分支
@@ -372,9 +379,9 @@ LAST 来个小结
 
 Pro Git，第二版，简体中文：https://bingohuang.gitbooks.io/progit2/content/
 
-思否chanjarster博客： https://segmentfault.com/a/1190000006185954
+chanjarster博客： https://segmentfault.com/a/1190000006185954
 
-																	THANKS~~ THE END~~
+															THANKS~~ THE END~~
 
 
 
