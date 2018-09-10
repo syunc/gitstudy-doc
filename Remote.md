@@ -10,6 +10,8 @@
         也可以在之后更换该别名，命令为：
         git remote rename old_name new_name
 - 删除远程仓库：`git remote rm [remote_name]`
+- 建立本地分支与远程分支的关联：`git branch --set-upstream-to=origin/develop`
+- 删除远程分支：`git push origin --delete branch_name`
  
 ### 从远程仓库拉取和抓取
 
