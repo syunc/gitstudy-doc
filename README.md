@@ -303,6 +303,7 @@ Git 非常聪明能够意识到这是一次改名，实际上这条命令相当�
 **提交重排**
 
 step1：修改文件提交
+
 ![rebase-i](https://i.imgur.com/sb77Ute.jpg)
 
 step2：`  $ git rebase -i HEAD~2 修改之前的两个提交`
@@ -314,6 +315,7 @@ step3：重新排序
 ![rebase-i-step3](https://i.imgur.com/bwDZ8KT.jpg)
 
 step4：完成
+
 ![rebase-i-step4](https://i.imgur.com/Kmplf1h.jpg)
 
 **删除：**
@@ -456,7 +458,7 @@ Pro Git，第二版，简体中文：https://bingohuang.gitbooks.io/progit2/cont
 
 chanjarster博客： https://segmentfault.com/a/1190000006185954
 
-															THANKS~~ THE END~~
+												THANKS~~ THE END~~
 
 
 
