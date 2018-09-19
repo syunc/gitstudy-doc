@@ -298,6 +298,52 @@ Git 非常聪明能够意识到这是一次改名，实际上这条命令相当�
 	$ git log master…test
 	A1 A2 A3 C0 C1
 
+####### git rebase -i HEAD~ 
+
+**提交重排**
+
+step1：修改文件提交
+![rebase-i](https://i.imgur.com/sb77Ute.jpg)
+
+step2：`  $ git rebase -i HEAD~2 修改之前的两个提交`
+
+![rebse-i-step2](https://i.imgur.com/DsDgXBe.jpg)
+
+step3：重新排序
+
+![rebase-i-step3](https://i.imgur.com/bwDZ8KT.jpg)
+
+step4：完成
+![rebase-i-step4](https://i.imgur.com/Kmplf1h.jpg)
+
+**删除：**
+在执行`$ git rebase -i HEAD~2`后进入的界面将想要删除的记录去除
+
+**修改：**
+在执行`$ git rebase -i HEAD~2`后进入的界面将想要修改的记录前面的标识改成edit
+
+
+###### 核弹级选项: filter-branch
+
+- 从**所有提交中**删除一个文件
+    
+        $ git filter-branch --tree-filter 'rm -f passwords.txt' HEAD
+        Rewrite 6b9b3cf04e7c5686a9cb838c3f36a8cb6a0fc2bd (21/21)
+        Ref 'refs/heads/master' was rewritten
+
+- 全局性地更换电子邮件地址
+
+        $ git filter-branch --commit-filter '
+            if [ "$GIT_AUTHOR_EMAIL" = "schacon@localhost" ];
+            then
+            GIT_AUTHOR_NAME="Scott Chacon";
+            GIT_AUTHOR_EMAIL="schacon@example.com";
+            git commit-tree "$@";
+            else
+            git commit-tree "$@";
+            fi' HEAD
+
+
 ###### 搜索调试 #######
 blame可以快速显示**每一行**最后一次修改是谁
 
@@ -361,7 +407,7 @@ target指的是想要移动到哪去：
 
 #########完美的分割线############
 
-######checkout
+###### checkout
 
     checkout是会修改HEAD的指向，变更Index区域里的内容，修改Working Directory里的内容。
 	这看上去很像reset --hard，但和reset --hard相比有两个重要的差别
