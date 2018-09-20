@@ -96,7 +96,8 @@
 - 内容：取决于对象的类型
 
 示意图如下：
-![commiter-adjust](D:\gitdoc\img\commiter-adjust.jpg)
+
+![commiter-adjust](./img/commiter-adjust.jpg)
 
 #### Git工作流程
 
@@ -352,11 +353,11 @@ step2：`  $ git rebase -i HEAD~2 修改之前的两个提交`
 
 
 
-![git-rebse-step1-adjust](D:\gitdoc\img\git-rebse-step1-adjust.jpg)
+![git-rebse-step1-adjust](./img/git-rebse-step1-adjust.jpg)
 
 step3：重新排序
 
-![git-rebase-step2-adjust](D:\gitdoc\img\git-rebase-step2-adjust.jpg)
+![git-rebase-step2-adjust](./img/git-rebase-step2-adjust.jpg)
 
 step4：完成
 
