@@ -254,6 +254,19 @@ $ git rm old_name
 $ git add new_name 
 ```
 
+###### 暂时存储
+`git stash`将当前未提交修改推入栈顶
+
+`git stash save "remark_info"` 将修改存储并附加一个备注 
+
+`git stash list` 显示存储列表
+
+`git stash pop ` 将栈顶的修改弹出
+
+`git stash clear` 清除栈内存储
+
+删除所有存储的进度
+
 ###### 查看 log
 
 `git log -number # 显示最近几条 `
